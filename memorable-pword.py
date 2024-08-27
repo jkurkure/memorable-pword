@@ -4,7 +4,7 @@ import random, string, sys
 tokens = [w for w in brown.words() if len(w) < 7 and w.isalpha()]  # Filter out words longer than 6 characters and those with non-alphabetic characters
 
 SECRET_KEY =  """
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed odio morbi quis commodo odio aenean sed. Malesuada pellentesque elit eget gravida cum. Ut lectus arcu bibendum at varius vel pharetra vel turpis. Tempus imperdiet nulla malesuada pellentesque elit eget. Massa enim nec dui nunc mattis enim. Nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Sed nisi lacus sed viverra. Nibh sit amet commodo nulla facilisi nullam vehicula. Augue lacus viverra vitae congue. Mi proin sed libero enim. Senectus et netus et malesuada fames ac turpis egestas integer.
+Lorem ipisum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed odio morbi quis commodo odio aenean sed. Malesuada pellentesque elit eget gravida cum. Ut lectus arcu bibendum at varius vel pharetra vel turpis. Tempus imperdiet nulla malesuada pellentesque elit eget. Massa enim nec dui nunc mattis enim. Nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Sed nisi lacus sed viverra. Nibh sit amet commodo nulla facilisi nullam vehicula. Augue lacus viverra vitae congue. Mi proin sed libero enim. Senectus et netus et malesuada fames ac turpis egestas integer.
 
  The sky above the port was the color of television, tuned
 to a dead channel.
@@ -36,14 +36,21 @@ simple_hasher = lambda s: sum([ord(c) for c in s])
 easy_hasher = lambda s: eval('*'.join([str(ord(c)) for c in s]))
 
 def generate_password(input_string, length):
-    random.seed(simple_hasher(SECRET_KEY) * simple_hasher(input_string) + easy_hasher(input_string))  # Set a fixed seed value
-    
+    random.seed(simple_hasher(SECRET_KEY) * simple_hasher(input_string) + easy_hasher(input_string) * length)  # Set a fixed seed value
+
     password = ""
 
     for _ in range(length):
-        password += random.choice(tokens) + random.choice(string.punctuation)
+        word = random.choice(tokens)
+        password += word + random.choice(string.punctuation)
+        tokens.remove(word)
 
     return password
 
 if __name__ == "__main__":
-    print(generate_password(sys.argv[1], eval(sys.argv[2])))
+    password = sys.argv[1]
+
+    for _ in range(eval(sys.argv[2])):
+      password = generate_password(password, eval(sys.argv[2]))
+    
+    print(password)
