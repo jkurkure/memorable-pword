@@ -34,7 +34,7 @@ corners he'd cut in Night City, and still he'd see the matrix in
 his sleep, bright lattices of logic unfolding across that colorless
 void...  The Sprawl was a long strange way home over the
 Pacific now, and he was no console man, no cyberspace cow-
-boy.  Just another hustler, trying to make it through.  But the
+boy.  Just another husler, trying to make it through.  But the
 dreams came on in the Japanese night like livewire voodoo,
 and he'd cry for it, cry in his sleep, and wake alone in the
 dark, curled in his capsule in some coffin hotel, his hands
@@ -48,7 +48,6 @@ easy_hasher = lambda s: eval('*'.join([str(ord(c)) for c in s]))
 
 def generate_password(input_string, length):
     random.seed(simple_hasher(SECRET_KEY) * simple_hasher(input_string) + easy_hasher(input_string) * length)  # Set a fixed seed value
-
     password = ""
 
     for _ in range(length):
